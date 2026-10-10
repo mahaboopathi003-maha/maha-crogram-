@@ -92,5 +92,59 @@ document.getElementById("copyBtn").addEventListener("click", async function(){
 document.getElementById("downloadBtn").href =
   URL.createObjectURL(new Blob([source], {type:"text/x-csrc"}));
 </script>
+
+<section class="card">
+  <h2>Download Your C Program</h2>
+
+  <label for="programName">Program Name</label>
+  <input
+    id="programName"
+    type="text"
+    placeholder="Enter program name"
+  >
+
+  <label for="programCode">C Code</label>
+  <textarea
+    id="programCode"
+    rows="10"
+    placeholder="Paste your C code here"
+  ></textarea>
+
+  <button type="button" onclick="downloadCFile()">
+    Download .c File
+  </button>
+</section>
+
+<script>
+function downloadCFile() {
+  const name = document.getElementById("programName")
+    .value.trim();
+
+  const code = document.getElementById("programCode").value;
+
+  if (!name || !code.trim()) {
+    alert("Enter a program name and C code.");
+    return;
+  }
+
+  const safeName = name
+    .replace(/\.c$/i, "")
+    .replace(/[^a-zA-Z0-9_-]+/g, "_");
+
+  const blob = new Blob([code], {
+    type: "text/plain;charset=utf-8"
+  });
+
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = safeName + ".c";
+  link.click();
+
+  URL.revokeObjectURL(url);
+}
+</script>
+
 </body>
 </html>
