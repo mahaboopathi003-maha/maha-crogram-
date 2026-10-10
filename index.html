@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maha C Program</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080b0a;color:#e8fff0;font-family:Arial,sans-serif}
+header{padding:25px 16px;text-align:center;background:#101713;border-bottom:1px solid #1cff79}
+h1{color:#39ff88;margin:0}
+header p{color:#b5c9bc}
+main{max-width:850px;margin:28px auto;padding:0 16px}
+.card{background:#111915;border:1px solid #254432;border-radius:14px;padding:20px;margin-bottom:20px}
+h2{color:#4bff91}
+pre{background:#050806;color:#b9ffcf;padding:16px;border-radius:8px;overflow-x:auto;white-space:pre}
+button,.download{display:inline-block;background:#39ff88;color:#06150b;border:0;border-radius:8px;padding:12px 16px;font-weight:bold;text-decoration:none;cursor:pointer;margin:5px 5px 5px 0}
+.small{color:#b5c9bc;font-size:14px}
+footer{text-align:center;color:#9cb4a3;padding:25px}
+</style>
+</head>
+<body>
+<header>
+<h1>MAHA C PROGRAM</h1>
+<p>Learn C Programming • Simple Programs • Download Source Code</p>
+</header>
+<main>
+<section class="card">
+<h2>01. String Length Program</h2>
+<p>Counts the number of characters in a string, including spaces.</p>
+<pre><code id="code">#include &lt;stdio.h&gt;
+
+int main()
+{
+    char str[100];
+    int i = 0, length = 0;
+
+    printf("Enter a string: ");
+    scanf("%99[^\\n]", str);
+
+    while (str[i] != '\\0')
+    {
+        length++;
+        i++;
+    }
+
+    printf("Length of the string = %d\\n", length);
+
+    return 0;
+}</code></pre>
+<button id="copyBtn" type="button">Copy Code</button>
+<a class="download" id="downloadBtn" href="#" download="string_length.c">Download .c File</a>
+<p class="small">Example: Input: Hello Maha → Output: Length of the string = 10</p>
+</section>
+</main>
+<footer>Designed for C Programming Learners 💚</footer>
+<script>
+const source = String.raw`#include <stdio.h>
+
+int main()
+{
+    char str[100];
+    int i = 0, length = 0;
+
+    printf("Enter a string: ");
+    scanf("%99[^\n]", str);
+
+    while (str[i] != '\0')
+    {
+        length++;
+        i++;
+    }
+
+    printf("Length of the string = %d\n", length);
+
+    return 0;
+}`;
+document.getElementById("copyBtn").addEventListener("click", async function(){
+  try {
+    await navigator.clipboard.writeText(source);
+    this.textContent = "Copied!";
+  } catch (e) {
+    const area = document.createElement("textarea");
+    area.value = source;
+    document.body.appendChild(area);
+    area.select();
+    document.execCommand("copy");
+    area.remove();
+    this.textContent = "Copied!";
+  }
+});
+document.getElementById("downloadBtn").href =
+  URL.createObjectURL(new Blob([source], {type:"text/x-csrc"}));
+</script>
+</body>
+</html>
