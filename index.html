@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maha C Program</title>
+<style>
+:root{color-scheme:dark;--bg:#070b08;--panel:#101812;--panel2:#0a100c;--green:#39ff88;--muted:#a9bcaf;--border:#284532;--text:#ecfff1}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at top,#13251a 0%,var(--bg) 55%);color:var(--text);font-family:Arial,Helvetica,sans-serif;line-height:1.5}
+header{padding:30px 16px 24px;text-align:center;background:#0b120d;border-bottom:1px solid var(--border)}
+header h1{margin:0;color:var(--green);font-size:clamp(26px,6vw,38px);letter-spacing:1.5px}
+header p{margin:8px 0 0;color:var(--muted)}
+main{width:min(960px,100%);margin:0 auto;padding:22px 14px 35px}
+.intro,.program{background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:18px;margin-bottom:17px;box-shadow:0 7px 22px #0003}
+.intro h2,.program h2{margin:0 0 7px;color:var(--green)}
+.intro p,.description,.hint{color:var(--muted)}
+label{display:block;margin:13px 0 6px;font-weight:700}
+input{width:100%;padding:12px 13px;background:#070c08;color:var(--text);border:1px solid #3b6047;border-radius:9px;font-size:16px;outline:none}
+input:focus{border-color:var(--green)}
+.program-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.number{flex:0 0 auto;border:1px solid #3b6047;color:var(--green);border-radius:8px;padding:4px 9px;font-weight:bold}
+.description{margin:5px 0 12px}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0 4px}
+button{font-size:14px;font-weight:bold;border:0;border-radius:9px;padding:11px 15px;cursor:pointer}
+.generate{background:var(--green);color:#06150b}
+.download{background:#243c2c;border:1px solid #4d805c;color:#edfff2}
+button:disabled{opacity:.45;cursor:not-allowed}
+.codebox{display:block;margin-top:14px;background:var(--panel2);border:1px solid #264532;border-radius:10px;overflow:hidden}
+.codebox.visible{display:block}
+.code-head{padding:9px 12px;color:var(--green);font-size:13px;border-bottom:1px solid #203b29}
+pre{margin:0;padding:15px;overflow-x:auto;white-space:pre;color:#c7ffd9;font:13px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;tab-size:4}
+.note{font-size:13px;color:var(--muted);margin-top:11px}
+footer{text-align:center;padding:24px 12px;color:var(--muted);border-top:1px solid var(--border)}
+footer strong{color:var(--green)}
+@media(min-width:700px){main{padding-top:28px}.intro,.program{padding:22px}}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+<body>
+<header>
+  <h1>MAHA C PROGRAM</h1>
+  <p>Learn C Programming · Download C Source Files</p>
+</header>
+<main>
+  <section class="intro">
+    <h2>My C Program Collection</h2>
+    <p>View all four C programs below. Enter a filename prefix, then use the single button to download all four source files together in one ZIP folder.</p>
+    <label for="filePrefix">Download file name</label>
+    <input id="filePrefix" type="text" value="Maha" maxlength="50" placeholder="Enter a name, e.g. Maha">
+    <p class="hint" id="nameExample">ZIP: Maha_C_Programs.zip · Files: Maha.01.c to Maha.04.c</p>
+    <div class="actions"><button class="download" id="downloadAll" type="button">Download All 4 Programs (.ZIP)</button></div>
+  </section>
+
+  <section class="program" data-program="1">
+    <div class="program-top"><div><h2>01. String Length</h2><p class="description">Counts the characters in a string, including spaces.</p></div><span class="number">01</span></div>
+    <div class="codebox"><div class="code-head">STRING LENGTH · C SOURCE</div><pre><code></code></pre></div>
+  </section>
+
+  <section class="program" data-program="2">
+    <div class="program-top"><div><h2>02. Compare Two Strings</h2><p class="description">Compares two strings and tells whether the first is smaller, equal, or greater.</p></div><span class="number">02</span></div>
+    <div class="codebox"><div class="code-head">COMPARE STRINGS · C SOURCE</div><pre><code></code></pre></div>
+  </section>
+
+  <section class="program" data-program="3">
+    <div class="program-top"><div><h2>03. Concatenate Two Strings</h2><p class="description">Adds the second string to the end of the first string.</p></div><span class="number">03</span></div>
+    <div class="codebox"><div class="code-head">STRING CONCATENATION · C SOURCE</div><pre><code></code></pre></div>
+  </section>
+
+  <section class="program" data-program="4">
+    <div class="program-top"><div><h2>04. Copy a String</h2><p class="description">Copies the characters from a source string into a destination string.</p></div><span class="number">04</span></div>
+    <div class="codebox"><div class="code-head">STRING COPY · C SOURCE</div><pre><code></code></pre></div>
+  </section>
+  <p class="note">Note: This page downloads the C source file. To run it, open the downloaded .c file in a C compiler.</p>
+</main>
+<footer>Designed for <strong>Maha 💚</strong></footer>
+<script>
+const programs = {
+  1: {
+    code: String.raw`#include <stdio.h>
+
+int main()
+{
+    char str[100];
+    int i = 0, length = 0;
+
+    printf("Enter a string: ");
+    scanf("%99[^\n]", str);
+
+    while (str[i] != '\0')
+    {
+        length++;
+        i++;
+    }
+
+    printf("Length of the string = %d\n", length);
+
+    return 0;
+}`
+  },
+  2: {
+    code: String.raw`#include <stdio.h>
+
+int main()
+{
+    char str1[100], str2[100];
+    int i = 0, result = 0;
+
+    printf("Enter first string: ");
+    scanf("%99[^\n]", str1);
+
+    getchar();
+
+    printf("Enter second string: ");
+    scanf("%99[^\n]", str2);
+
+    while (str1[i] != '\0' && str2[i] != '\0')
+    {
+        if (str1[i] != str2[i])
+        {
+            result = str1[i] - str2[i];
+            break;
+        }
+        i++;
+    }
+
+    if (result == 0)
+        result = str1[i] - str2[i];
+
+    if (result == 0)
+        printf("Both strings are equal.\n");
+    else if (result < 0)
+        printf("First string is smaller than second string.\n");
+    else
+        printf("First string is greater than second string.\n");
+
+    return 0;
+}`
+  },
+  3: {
+    code: String.raw`#include <stdio.h>
+
+int main()
+{
+    char str1[200], str2[100];
+    int i = 0, j = 0;
+
+    printf("Enter first string: ");
+    scanf("%99[^\n]", str1);
+
+    getchar();
+
+    printf("Enter second string: ");
+    scanf("%99[^\n]", str2);
+
+    while (str1[i] != '\0')
+        i++;
+
+    while (str2[j] != '\0')
+    {
+        str1[i] = str2[j];
+        i++;
+        j++;
+    }
+
+    str1[i] = '\0';
+
+    printf("Concatenated string = %s\n", str1);
+
+    return 0;
+}`
+  },
+  4: {
+    code: String.raw`#include <stdio.h>
+
+int main()
+{
+    char source[100], destination[100];
+    int i = 0;
+
+    printf("Enter a string: ");
+    scanf("%99[^\n]", source);
+
+    while (source[i] != '\0')
+    {
+        destination[i] = source[i];
+        i++;
+    }
+
+    destination[i] = '\0';
+
+    printf("Copied string = %s\n", destination);
+
+    return 0;
+}`
+  }
+};
+function cleanPrefix(value) {
+  return value.trim().replace(/\.c$/i, '').replace(/[^a-zA-Z0-9_-]+/g, '_').replace(/^_+|_+$/g, '').slice(0, 50);
+}
+function refreshExample() {
+  const prefix = cleanPrefix(document.getElementById('filePrefix').value) || 'Maha';
+  document.getElementById('nameExample').textContent = 'ZIP: ' + prefix + '_C_Programs.zip · Files: ' + prefix + '.01.c to ' + prefix + '.04.c';
+}
+document.getElementById('filePrefix').addEventListener('input', refreshExample);
+// Show all four source codes automatically; no Generate buttons needed.
+document.querySelectorAll('.program').forEach(card => {
+  const id = card.dataset.program;
+  card.querySelector('code').textContent = programs[id].code;
+  card.querySelector('.codebox').classList.add('visible');
+});
+document.getElementById('downloadAll').addEventListener('click', async () => {
+  const entered = cleanPrefix(document.getElementById('filePrefix').value);
+  if (!entered) {
+    alert('Please enter a file name first.');
+    document.getElementById('filePrefix').focus();
+    return;
+  }
+  if (typeof JSZip === 'undefined') {
+    alert('ZIP library could not load. Please check your internet connection and try again.');
+    return;
+  }
+  const zip = new JSZip();
+  Object.keys(programs).sort((a,b) => Number(a)-Number(b)).forEach(id => {
+    const filename = entered + '.' + String(id).padStart(2, '0') + '.c';
+    zip.file(filename, programs[id].code + '\n');
+  });
+  const blob = await zip.generateAsync({type: 'blob'});
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = entered + '_C_Programs.zip';
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
+});
+refreshExample();
+</script>
+</body>
+</html>
