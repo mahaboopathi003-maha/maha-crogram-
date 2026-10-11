@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maha C Programs</title>
+<style>
+  body{font-family:Arial,sans-serif;background:#f3f7f4;margin:0;padding:24px;color:#1b2b21}
+  .box{max-width:560px;margin:auto;background:#fff;border-radius:14px;padding:24px;box-shadow:0 4px 16px rgba(0,0,0,.08)}
+  h1{margin-top:0;color:#1f7a45}
+  label{display:block;margin:12px 0 4px}
+  input,select{width:100%;box-sizing:border-box;padding:12px;font-size:16px;border:1px solid #c9d6ce;border-radius:8px}
+  #preview{margin:10px 0 14px;font-size:14px;color:#5b6b61}
+  button{width:100%;padding:14px;font-size:18px;background:#1f7a45;color:#fff;border:0;border-radius:10px;cursor:pointer}
+  button:hover{background:#176237}
+  .item{border-top:1px solid #e3e9e5;padding:10px 0}
+  small{color:#5b6b61}
+  #msg{margin-top:10px;color:#1f7a45;font-weight:bold;text-align:center}
+</style>
+</head>
+<body>
+<div class="box">
+  <h1>Maha C Programs</h1>
+  <p>Oru button click pannina 4 C files download aagum (Turbo C++ ku ready).</p>
+  <label for="prefix"><b>File name prefix</b></label>
+  <input id="prefix" type="text" value="Maha" maxlength="30" placeholder="Unga peru (e.g. Maha)">
+  <label for="style"><b>File name style</b></label>
+  <select id="style" onchange="preview()">
+    <option value="plain">Maha01.c (Turbo C++ ku safe)</option>
+    <option value="dot">Maha.01.c</option>
+  </select>
+  <div id="preview"></div>
+  <button onclick="downloadAll()">Download All 4 C Programs</button>
+  <div id="msg"></div>
+  <div class="item"><b>01</b> String Length </div>
+  <div class="item"><b>02</b> Compare Two Strings </div>
+  <div class="item"><b>03</b> Concatenate Two Strings </div>
+  <div class="item"><b>04</b> Copy a String </div>
+  <p><small>Browser keep asking na "Allow multiple downloads" click pannunga. Turbo C++ la 8 letters kulla peru irundha nalladhu. Files ah C:\TC\BIN la save panni Turbo C++ la open pannunga, Ctrl+F9 run.</small></p>
+</div>
+
+<script>
+var files = {
+"01": String.raw`#include <stdio.h>
+#include <conio.h>
+
+void main()
+{
+    char str[100];
+    int i = 0;
+
+    clrscr();
+    printf("Enter a string: ");
+    gets(str);
+
+    while (str[i] != '\0')
+        i++;
+
+    printf("\nLength of the string = %d", i);
+    getch();
+}
+`,
+"02": String.raw`#include <stdio.h>
+#include <conio.h>
+
+void main()
+{
+    char s1[100], s2[100];
+    int i = 0;
+
+    clrscr();
+    printf("Enter first string: ");
+    gets(s1);
+    printf("Enter second string: ");
+    gets(s2);
+
+    while (s1[i] != '\0' && s2[i] != '\0' && s1[i] == s2[i])
+        i++;
+
+    if (s1[i] == s2[i])
+        printf("\nThe strings are EQUAL");
+    else
+        printf("\nThe strings are NOT equal");
+    getch();
+}
+`,
+"03": String.raw`#include <stdio.h>
+#include <conio.h>
+
+void main()
+{
+    char s1[100], s2[50];
+    int i = 0, j = 0;
+
+    clrscr();
+    printf("Enter first string: ");
+    gets(s1);
+    printf("Enter second string: ");
+    gets(s2);
+
+    while (s1[i] != '\0')
+        i++;
+
+    while (s2[j] != '\0')
+    {
+        s1[i] = s2[j];
+        i++;
+        j++;
+    }
+    s1[i] = '\0';
+
+    printf("\nConcatenated string = %s", s1);
+    getch();
+}
+`,
+"04": String.raw`#include <stdio.h>
+#include <conio.h>
+
+void main()
+{
+    char src[100], dest[100];
+    int i = 0;
+
+    clrscr();
+    printf("Enter a string: ");
+    gets(src);
+
+    while (src[i] != '\0')
+    {
+        dest[i] = src[i];
+        i++;
+    }
+    dest[i] = '\0';
+
+    printf("\nCopied string = %s", dest);
+    getch();
+}
+`
+};
+
+function saveFile(name, text) {
+  var blob = new Blob([text.replace(/\r?\n/g, "\r\n")], {type: "application/octet-stream"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 2000);
+}
+
+function getName(num) {
+  var p = document.getElementById("prefix").value.trim().replace(/[\\/:*?"<>|\s]/g, "");
+  if (!p) p = "Maha";
+  var style = document.getElementById("style").value;
+  return style === "dot" ? p + "." + num + ".c" : p + num + ".c";
+}
+
+function preview() {
+  var names = Object.keys(files).map(getName);
+  document.getElementById("preview").textContent = "Download aagum: " + names.join(", ");
+}
+
+function downloadAll() {
+  var nums = Object.keys(files);
+  nums.forEach(function(n, i) {
+    setTimeout(function(){ saveFile(getName(n), files[n]); }, i * 600);
+  });
+  document.getElementById("msg").textContent = "4 files download aagut
