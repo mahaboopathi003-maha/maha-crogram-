@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maha C Programs</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;padding:18px;min-height:100vh;font-family:Arial,sans-serif;background:#070b1a;color:#cfe;display:flex;justify-content:center}
+  .card{width:100%;max-width:460px;background:#0e1730;border:2px solid #17c3e6;border-radius:14px;padding:22px;box-shadow:0 0 20px rgba(23,195,230,.25);height:fit-content}
+  h1{text-align:center;color:#17c3e6;margin:0 0 6px;font-size:26px}
+  .sub{text-align:center;color:#9fb6c8;font-size:14px;margin:0 0 18px}
+  input{width:100%;padding:14px;font-size:16px;background:#0a1024;color:#fff;border:2px solid #17c3e6;border-radius:8px;outline:none}
+  input:focus{border-color:#1de9a0}
+  .go{width:100%;margin-top:14px;padding:15px;font-size:16px;font-weight:bold;letter-spacing:1px;color:#06231a;border:0;border-radius:8px;cursor:pointer;background:linear-gradient(90deg,#17d4f0,#1de9a0)}
+  #status{margin-top:16px;padding:12px;border-radius:8px;background:#0b3b2d;border:1px solid #1de9a0;color:#1de9a0;font-size:14px;display:none;line-height:1.6}
+  #status.err{background:#3b0b14;border-color:#ff5a76;color:#ff8da1}
+  #files{margin-top:16px;display:none}
+  #files h3{text-align:center;color:#17c3e6;font-size:16px;margin:0 0 10px}
+  .f{display:block;width:100%;margin-bottom:8px;padding:12px;font-size:15px;color:#17c3e6;background:#0a1024;border:1px solid #17c3e6;border-radius:6px;cursor:pointer}
+  .f small{display:block;color:#7f97aa;font-size:12px;margin-top:2px}
+  .profile{text-align:center;margin-bottom:18px;padding:16px;border-radius:12px;background:linear-gradient(135deg,#e6396f,#ff6b8b);color:#fff}
+  .profile img,.profile .av{width:84px;height:84px;border-radius:50%;object-fit:cover;border:3px solid #fff;display:block;margin:0 auto 8px}
+  .profile .av{background:#fff;color:#e6396f;font-size:36px;font-weight:bold;line-height:78px}
+  .profile a{color:#fff;text-decoration:none;font-weight:bold;font-size:16px}
+  .profile small{display:block;opacity:.9;margin-top:2px}
+  .note{margin-top:14px;color:#7f97aa;font-size:12px;text-align:center}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="profile" id="profile"></div>
+  <h1>Maha C Programs</h1>
+  <p class="sub">Enter your name and generate 4 C programs (String programs).</p>
+
+  <input id="name" type="text" maxlength="20" placeholder="Enter your name" autocomplete="off">
+  <button class="go" id="go">GENERATE &amp; DOWNLOAD</button>
+
+  <div id="status"></div>
+
+  <div id="files">
+    <h3>Your Files</h3>
+    <div id="list"></div>
+  </div>
+
+  <p class="note">If Chrome asks "Download multiple files?", tap Allow. You can also tap any file above to download it again.</p>
+</div>
+
+<script>
+// ===== EDIT THESE 2 LINES =====
+var PROFILE_PHOTO = "profile.jpg";   // unga photo file peru (repo la upload pannunga)
+var INSTA_ID = "your_insta_id";      // unga instagram id (@ illama)
+// ==============================
+
+(function () {
+  var box = document.getElementById("profile");
+  var img = document.createElement("img");
+  img.alt = "Maha";
+  img.src = PROFILE_PHOTO;
+  img.onerror = function () {
+    var av = document.createElement("div");
+    av.className = "av";
+    av.textContent = "M";
+    box.replaceChild(av, img);
+  };
+  box.appendChild(img);
+  var a = document.createElement("a");
+  a.href = "https://instagram.com/" + INSTA_ID;
+  a.target = "_blank";
+  a.rel = "noopener";
+  a.textContent = "@" + INSTA_ID;
+  box.appendChild(a);
+  var sm = document.createElement("small");
+  sm.textContent = "Created by Maha";
+  box.appendChild(sm);
+})();
+
+var programs = [{"num": "01", "title": "String Length", "code": "#include <stdio.h>\n\nint main()\n{\n    char str[100];\n    int i = 0, length = 0;\n\n    printf(\"Enter a string: \");\n    scanf(\"%99[^\\n]\", str);\n\n    while (str[i] != '\\0')\n    {\n        length++;\n        i++;\n    }\n\n    printf(\"Length of the string = %d\\n\", length);\n\n    return 0;\n}\n"}, {"num": "02", "title": "Compare Two Strings", "code": "#include <stdio.h>\n\nint main()\n{\n    char s1[100], s2[100];\n    int i = 0;\n\n    printf(\"Enter first string: \");\n    scanf(\"%99[^\\n]\", s1);\n    printf(\"Enter second string: \");\n    scanf(\" %99[^\\n]\", s2);\n\n    while (s1[i] != '\\0' && s2[i] != '\\0' && s1[i] == s2[i])\n    {\n        i++;\n    }\n\n    if (s1[i] == s2[i])\n        printf(\"The strings are EQUAL\\n\");\n    else\n        printf(\"The strings are NOT equal\\n\");\n\n    return 0;\n}\n"}, {"num": "03", "title": "Concatenate Two Strings", "code": "#include <stdio.h>\n\nint main()\n{\n    char s1[200], s2[100];\n    int i = 0, j = 0;\n\n    printf(\"Enter first string: \");\n    scanf(\"%99[^\\n]\", s1);\n    printf(\"Enter second string: \");\n    scanf(\" %99[^\\n]\", s2);\n\n    while (s1[i] != '\\0')\n    {\n        i++;\n    }\n\n    while (s2[j] != '\\0')\n    {\n        s1[i] = s2[j];\n        i++;\n        j++;\n    }\n    s1[i] = '\\0';\n\n    printf(\"Concatenated string = %s\\n\", s1);\n\n    return 0;\n}\n"}, {"num": "04", "title": "Copy a String", "code": "#include <stdio.h>\n\nint main()\n{\n    char src[100], dest[100];\n    int i = 0;\n\n    printf(\"Enter a string: \");\n    scanf(\"%99[^\\n]\", src);\n\n    while (src[i] != '\\0')\n    {\n        dest[i] = src[i];\n        i++;\n    }\n    dest[i] = '\\0';\n\n    printf(\"Copied string = %s\\n\", dest);\n\n    return 0;\n}\n"}];
+
+function cleanName(v) {
+  return v.trim().replace(/[\\\/:*?"<>|\s.]+/g, "");
+}
+
+function fileName(prefix, p) {
+  return prefix + p.num + ".c";
+}
+
+function saveFile(name, text) {
+  var blob = new Blob([text.replace(/\r?\n/g, "\r\n")], { type: "text/plain" });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  a.href = url;
+  a.download = name;
+  a.style.display = "none";
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(function () {
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }, 5000);
+}
+
+function showStatus(html, isErr) {
+  var s = document.getElementById("status");
+  s.className = isErr ? "err" : "";
+  s.style.display = "block";
+  s.innerHTML = html;
+}
+
+document.getElementById("go").onclick = function () {
+  var prefix = cleanName(document.getElementById("name").value);
+  if (!prefix) {
+    showStatus("Please enter your name first.", true);
+    return;
+  }
+
+  var list = document.getElementById("list");
+  list.innerHTML = "";
+  var names = [];
+
+  programs.forEach(function (p, i) {
+    var fname = fileName(prefix, p);
+    names.push(fname);
+
+    // file button (tap to download again)
+    var b = document.createElement("button");
+    b.className = "f";
+    b.innerHTML = fname + "<small>" + p.title + "</small>";
+    b.onclick = function () { saveFile(fname, p.code); };
+    list.appendChild(b);
+
+    // download all, first one immediately, rest with small gap
+    setTimeout(function () { saveFile(fname, p.code); }, i * 600);
+  });
+
+  document.getElementById("files").style.display = "block";
+  showStatus("4 C files generated successfully!<br><br>" + names.join("<br>"), false);
+};
+</script>
+</body>
+</html>
