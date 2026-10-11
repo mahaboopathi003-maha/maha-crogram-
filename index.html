@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maha C Programs</title>
+<link href="https://fonts.googleapis.com/css2?family=Kurale&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;min-height:100%}
+  body{background:#070b18;color:#cfe3ff;font-family:'Kurale',Georgia,serif;display:flex;justify-content:center;padding:18px;min-height:100vh}
+  .card{width:100%;max-width:480px;height:fit-content;border:3px solid #17c3e8;border-radius:28px;background:#0b1530;padding:26px 24px 30px;box-shadow:0 0 28px #17c3e866}
+  .banner{height:104px;border:2px solid #17c3e8;border-radius:22px;background:#03050f;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;color:#1de9a0;font-size:17px;box-shadow:0 0 14px #17c3e844 inset}
+  h1{color:#17c3e8;text-align:center;font-size:40px;margin:30px 0 8px;text-shadow:0 0 14px #17c3e8aa}
+  p.sub{text-align:center;font-size:19px;line-height:1.5;margin:0 0 26px;letter-spacing:.5px}
+  input{width:100%;padding:20px;border-radius:18px;border:3px solid #17c3e8;background:#070b1c;color:#fff;font-family:inherit;font-size:22px;outline:none;letter-spacing:1px}
+  input::placeholder{color:#7d8798}
+  button{width:100%;margin-top:22px;padding:22px;border:0;border-radius:18px;font-family:inherit;font-size:22px;font-weight:700;letter-spacing:3px;color:#04202a;background:linear-gradient(90deg,#17d5f5,#1de9a0);cursor:pointer}
+  button:active{transform:scale(.98)}
+  button.alt{background:#10224a;color:#17c3e8;border:2px solid #17c3e8;font-size:18px;padding:16px;letter-spacing:2px;margin-top:0}
+  .note{font-size:17px;line-height:1.5;text-align:center;opacity:.75;margin-top:22px}
+  .ver{font-size:15px;text-align:center;opacity:.5;margin-top:14px}
+  #files{display:none;margin-top:26px}
+  #files h3{color:#17c3e8;margin:0 0 12px;text-align:center}
+  #files a{display:block;padding:14px;margin-top:10px;border:1px solid #17c3e8;border-radius:14px;color:#1de9a0;text-decoration:none;text-align:center;word-break:break-all}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="banner" id="banner">Ready</div>
+  <h1>Maha C Programs</h1>
+  <p class="sub">Enter your name and generate 4 C programs (String programs).</p>
+  <input id="name" type="text" placeholder="Enter your name" autocomplete="off" maxlength="40">
+  <button id="gen" type="button">GENERATE &amp; DOWNLOAD</button>
+
+  <div id="files">
+    <h3>Your Files</h3>
+    <button id="zipBtn" class="alt" type="button">DOWNLOAD ALL AS ZIP</button>
+    <div id="links"></div>
+  </div>
+
+  <div class="note">If Chrome asks "Download multiple files?", tap Allow.<br>You can also tap any file above to download it again.</div>
+  <div class="ver">Version: FINAL (stdio.h only)</div>
+</div>
+
+<script>
+function buildPrograms(prefix){
+  var p = prefix;
+  return [
+  {file: p + '01.c', code: String.raw`#include <stdio.h>
+
+int main()
+{
+    char str[100];
+    int i = 0, length = 0;
+
+    printf("Enter a string: ");
+    scanf("%99[^\n]", str);
+
+    while (str[i] != '\0')
+    {
+        length++;
+        i++;
+    }
+
+    printf("Length of the string = %d\n", length);
+
+    return 0;
+}
+`},
+  {file: p + '02.c', code: String.raw`#include <stdio.h>
+
+int main()
+{
+    char source[100], destination[100];
+    int i = 0;
+
+    printf("Enter a string: ");
+    scanf("%99[^\n]", source);
+
+    while (source[i] != '\0')
+    {
+        destination[i] = source[i];
+        i++;
+    }
+
+    destination[i] = '\0';
+
+    printf("Copied string = %s\n", destination);
+
+    return 0;
+}
+`},
+  {file: p + '03.c', code: String.raw`#include <stdio.h>
+
+int main()
+{
+    char str1[100], str2[100];
+    int i = 0, result = 0;
+
+    printf("Enter first string: ");
+    scanf("%99[^\n]", str1);
+
+    getchar();
+
+    printf("Enter second string: ");
+    scanf("%99[^\n]", str2);
+
+    while (str1[i] != '\0' && str2[i] != '\0')
+    {
+        if (str1[i] != str2[i])
+        {
+            result = str1[i] - str2[i];
+            break;
+        }
+        i++;
+    }
+
+    if (result == 0)
+        result = str1[i] - str2[i];
+
+    if (result == 0)
+        printf("Both strings are equal.\n");
+    else if (result < 0)
+        printf("First string is smaller than second string.\n");
+    else
+        printf("First string is greater than second string.\n");
+
+    return 0;
+}
+`},
+  {file: p + '04.c', code: String.raw`#include <stdio.h>
+
+int main()
+{
+    char str1[200], str2[100];
+    int i = 0, j = 0;
+
+    printf("Enter first string: ");
+    scanf("%99[^\n]", str1);
+
+    getchar();
+
+    printf("Enter second string: ");
+    scanf("%99[^\n]", str2);
+
+    while (str1[i] != '\0')
+        i++;
+
+    while (str2[j] != '\0')
+    {
+        str1[i] = str2[j];
+        i++;
+        j++;
+    }
+
+    str1[i] = '\0';
+
+    printf("Concatenated string = %s\n", str1);
+
+    return 0;
+}
+`}
+  ];
+}
+
+/* ---------- tiny ZIP (store, no compression) ---------- */
+var crcTable = (function(){
+  var t = [], c, n, k;
+  for (n = 0; n < 256; n++) {
+    c = n;
+    for (k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+    t[n] = c >>> 0;
+  }
+  return t;
+})();
+function crc32(b){
+  var c = 0xFFFFFFFF;
+  for (var i = 0; i < b.length; i++) c = crcTable[(c ^ b[i]) & 0xFF] ^ (c >>> 8);
+  return (c ^ 0xFFFFFFFF) >>> 0;
+}
+function makeZip(files){
+  var enc = new TextEncoder(), parts = [], central = [], offset = 0;
+  files.forEach(function(f){
+    var nb = enc.encode(f.file), data = enc.encode(f.code), crc = crc32(data);
+    var lh = new DataView(new ArrayBuffer(30));
+    lh.setUint32(0,0x04034b50,true); lh.setUint16(4,20,true); lh.setUint16(6,0x0800,true);
+    lh.setUint16(8,0,true); lh.setUint16(10,0,true); lh.setUint16(12,0x21,true);
+    lh.setUint32(14,crc,true); lh.setUint32(18,data.length,true); lh.setUint32(22,data.length,true);
+    lh.setUint16(26,nb.length,true); lh.setUint16(28,0,true);
+    parts.push(new Uint8Array(lh.buffer), nb, data);
+    var ch = new DataView(new ArrayBuffer(46));
+    ch.setUint32(0,0x02014b50,true); ch.setUint16(4,20,true); ch.setUint16(6,20,true);
+    ch.setUint16(8,0x0800,true); ch.setUint16(10,0,true); ch.setUint16(12,0,true); ch.setUint16(14,0x21,true);
+    ch.setUint32(16,crc,true); ch.setUint32(20,data.length,true); ch.setUint32(24,data.length,true);
+    ch.setUint16(28,nb.length,true); ch.setUint32(42,offset,true);
+    central.push(new Uint8Array(ch.buffer), nb);
+    offset += 30 + nb.length + data.length;
+  });
+  var csize = 0;
+  central.forEach(function(p){ csize += p.length; });
+  var end = new DataView(new ArrayBuffer(22));
+  end.setUint32(0,0x06054b50,true); end.setUint16(8,files.length,true); end.setUint16(10,files.length,true);
+  end.setUint32(12,csize,true); end.setUint32(16,offset,true);
+  return new Blob(parts.concat(central, [new Uint8Array(end.buffer)]), {type:'application/zip'});
+}
+
+/* ---------- download helper ---------- */
+function saveBlob(blob, filename){
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.rel = 'noopener';
+  a.style.display = 'none';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(function(){ if (a.parentNode) a.parentNode.removeChild(a); URL.revokeObjectURL(url); }, 10000);
+}
+function codeBlob(code){ return new Blob([code], {type:'application/octet-stream'}); }
+
+var current = [], currentName = '';
+var banner = document.getElementById('banner');
+function say(t, bad){ banner.style.color = bad ? '#ff7b7b' : '#1de9a0'; banner.textContent = t; }
+
+function generate(){
+  var raw = document.getElementById('name').value.trim();
+  if (!raw) { say('Please enter your name first.', true); return; }
+  currentName = raw.replace(/[^A-Za-z0-9 ]/g, '').replace(/\s+/g, '_') || 'user';
+  current = buildPrograms(currentName);
+
+  var links = document.getElementById('links');
+  links.innerHTML = '';
+  current.forEach(function(f){
+    var a = document.createElement('a');
+    a.href = '#';
+    a.textContent = f.file;
+    a.addEventListener('click', function(e){ e.preventDefault(); saveBlob(codeBlob(f.code), f.file); });
+    links.appendChild(a);
+  });
+  document.getElementById('files').style.display = 'block';
+
+  say('Generated 4 programs for ' + raw + '. Downloading...');
+  current.forEach(function(f, i){
+    setTimeout(function(){
+      saveBlob(codeBlob(f.code), f.file);
+      if (i === current.length - 1) say('Done! If any file is missing, tap ZIP or the file name below.');
+    }, i * 800);
+  });
+}
+
+document.getElementById('gen').addEventListener('click', generate);
+document.getElementById('name').addEventListener('keydown', function(e){ if (e.key === 'Enter') generate(); });
+document.getElementById('zipBtn').addEventListener('click', function(){
+  if (!current.length) return;
+  saveBlob(makeZip(current), currentName + '_C_programs.zip');
+});
+</script>
+</body>
+</html>
