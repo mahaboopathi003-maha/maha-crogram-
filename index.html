@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maha C Programs</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;background:#070b18;color:#cfe3ff;font-family:system-ui,Arial,sans-serif;display:flex;justify-content:center;padding:20px}
+  .card{width:100%;max-width:460px;border:2px solid #17c3e8;border-radius:24px;background:#0b1530;padding:24px;box-shadow:0 0 25px #17c3e855;height:fit-content}
+  h1{color:#17c3e8;text-align:center;margin:8px 0}
+  p.sub{text-align:center;margin:0 0 20px}
+  input{width:100%;padding:16px;border-radius:14px;border:2px solid #17c3e8;background:#070b1c;color:#fff;font-size:18px;outline:none}
+  button{width:100%;margin-top:14px;padding:16px;border:0;border-radius:14px;font-size:18px;font-weight:700;letter-spacing:1px;color:#022;background:linear-gradient(90deg,#17d5f5,#1de9a0);cursor:pointer}
+  button.alt{background:#12254d;color:#17c3e8;border:2px solid #17c3e8}
+  .note{font-size:14px;text-align:center;opacity:.7;margin-top:14px}
+  #list{margin-top:16px;display:none}
+  #list a{display:block;padding:12px;margin-top:8px;border:1px solid #17c3e8;border-radius:12px;color:#1de9a0;text-decoration:none;text-align:center}
+  #msg{text-align:center;margin-top:12px;color:#1de9a0;min-height:20px}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Maha C Programs</h1>
+  <p class="sub">Enter your name and generate 4 C programs (String programs).</p>
+  <input id="name" type="text" placeholder="Enter your name" autocomplete="off">
+  <button id="gen" type="button">GENERATE &amp; DOWNLOAD</button>
+  <div id="msg"></div>
+  <div id="list">
+    <button id="zipBtn" class="alt" type="button">DOWNLOAD ALL AS ZIP</button>
+    <div id="links"></div>
+  </div>
+  <div class="note">If Chrome asks "Download multiple files?", tap Allow.<br>You can also tap any file above to download it again.</div>
+  <div class="note">Version: FINAL (stdio.h only)</div>
+</div>
+
+<script>
+function cStr(s){return s.replace(/\\/g,'\\\\').replace(/"/g,'\\"');}
+
+function buildPrograms(name){
+  var n = cStr(name);
+  return [
+  {file:'1_string_length.c', code:
+'#include <stdio.h>\n\nint main() {\n    char str[] = "'+n+'";\n    int i = 0;\n\n    while (str[i] != \'\\0\') {\n        i++;\n    }\n\n    printf("String: %s\\n", str);\n    printf("Length of the string = %d\\n", i);\n    return 0;\n}\n'},
+  {file:'2_reverse_string.c', code:
+'#include <stdio.h>\n\nint main() {\n    char str[] = "'+n+'";\n    int len = 0, i;\n\n    while (str[len] != \'\\0\') {\n        len++;\n    }\n\n    printf("Original: %s\\n", str);\n    printf("Reversed: ");\n    for (i = len - 1; i >= 0; i--) {\n        printf("%c", str[i]);\n    }\n    printf("\\n");\n    return 0;\n}\n'},
+  {file:'3_count_vowels_consonants.c', code:
+'#include <stdio.h>\n\nint main() {\n    char str[] = "'+n+'";\n    int i, vowels = 0, consonants = 0;\n    char ch;\n\n    for (i = 0; str[i] != \'\\0\'; i++) {\n        ch = str[i];\n        if (ch >= \'A\' && ch <= \'Z\') {\n            ch = ch + 32;\n        }\n        if (ch >= \'a\' && ch <= \'z\') {\n            if (ch == \'a\' || ch == \'e\' || ch == \'i\' || ch == \'o\' || ch == \'u\') {\n                vowels++;\n            } else {\n                consonants++;\n            }\n        }\n    }\n\n    printf("String: %s\\n", str);\n    printf("Vowels = %d\\n", vowels);\n    printf("Consonants = %d\\n", consonants);\n    return 0;\n}\n'},
+  {file:'4_palindrome_check.c', code:
+'#include <stdio.h>\n\nint main() {\n    char str[] = "'+n+'";\n    int len = 0, i, flag = 1;\n    char a, b;\n\n    while (str[len] != \'\\0\') {\n        len++;\n    }\n\n    for (i = 0; i < len / 2; i++) {\n        a = str[i];\n        b = str[len - 1 - i];\n        if (a >= \'A\' && a <= \'Z\') a = a + 32;\n        if (b >= \'A\' && b <= \'Z\') b = b + 32;\n        if (a != b) {\n            flag = 0;\n            break;\n        }\n    }\n\n    if (flag) {\n        printf("%s is a palindrome\\n", str);\n    } else {\n        printf("%s is not a palindrome\\n", str);\n    }\n    return 0;\n}\n'}
+  ];
+}
+
+/* ---------- tiny ZIP (store, no compression) ---------- */
+var crcTable = (function(){
+  var t = [], c, n, k;
+  for (n = 0; n < 256; n++) {
+    c = n;
+    for (k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+    t[n] = c >>> 0;
+  }
+  return t;
+})();
+function crc32(b){
+  var c = 0xFFFFFFFF;
+  for (var i = 0; i < b.length; i++) c = crcTable[(c ^ b[i]) & 0xFF] ^ (c >>> 8);
+  return (c ^ 0xFFFFFFFF) >>> 0;
+}
+function makeZip(files){
+  var enc = new TextEncoder(), parts = [], central = [], offset = 0;
+  files.forEach(function(f){
+    var nb = enc.encode(f.file), data = enc.encode(f.code), crc = crc32(data);
+    var lh = new DataView(new ArrayBuffer(30));
+    lh.setUint32(0,0x04034b50,true); lh.setUint16(4,20,true); lh.setUint16(6,0x0800,true);
+    lh.setUint16(8,0,true); lh.setUint16(10,0,true); lh.setUint16(12,0x21,true);
+    lh.setUint32(14,crc,true); lh.setUint32(18,data.length,true); lh.setUint32(22,data.length,true);
+    lh.setUint16(26,nb.length,true); lh.setUint16(28,0,true);
+    parts.push(new Uint8Array(lh.buffer), nb, data);
+    var ch = new DataView(new ArrayBuffer(46));
+    ch.setUint32(0,0x02014b50,true); ch.setUint16(4,20,true); ch.setUint16(6,20,true);
+    ch.setUint16(8,0x0800,true); ch.setUint16(10,0,true); ch.setUint16(12,0,true); ch.setUint16(14,0x21,true);
+    ch.setUint32(16,crc,true); ch.setUint32(20,data.length,true); ch.setUint32(24,data.length,true);
+    ch.setUint16(28,nb.length,true); ch.setUint32(42,offset,true);
+    central.push(new Uint8Array(ch.buffer), nb);
+    offset += 30 + nb.length + data.length;
+  });
+  var csize = 0;
+  central.forEach(function(p){ csize += p.length; });
+  var end = new DataView(new ArrayBuffer(22));
+  end.setUint32(0,0x06054b50,true); end.setUint16(8,files.length,true); end.setUint16(10,files.length,true);
+  end.setUint32(12,csize,true); end.setUint32(16,offset,true);
+  return new Blob(parts.concat(central, [new Uint8Array(end.buffer)]), {type:'application/zip'});
+}
+
+/* ---------- download helper ---------- */
+function saveBlob(blob, filename){
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = filename; a.style.display = 'none';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); }, 4000);
+}
+
+var current = [], currentName = '';
+
+function generate(){
+  var raw = document.getElementById('name').value.trim();
+  var msg = document.getElementById('msg');
+  if (!raw) { msg.style.color = '#ff7b7b'; msg.textContent = 'Please enter your name first.'; return; }
+  msg.style.color = '#1de9a0';
+  currentName = raw.replace(/[^A-Za-z0-9 ]/g, '').replace(/\s+/g, '_') || 'user';
+  current = buildPrograms(raw);
+
+  var links = document.getElementById('links');
+  links.innerHTML = '';
+  current.forEach(function(f){
+    var a = document.createElement('a');
+    a.href = '#'; a.textContent = f.file;
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      saveBlob(new Blob([f.code], {type:'text/plain'}), f.file);
+    });
+    links.appendChild(a);
+  });
+  document.getElementById('list').style.display = 'block';
+
+  msg.textContent = 'Generated! Downloading...';
+  current.forEach(function(f, i){
+    setTimeout(function(){
+      saveBlob(new Blob([f.code], {type:'text/plain'}), f.file);
+      if (i === current.length - 1) msg.textContent = 'Done! If files did not download, use ZIP button or tap a file below.';
+    }, i * 700);
+  });
+}
+
+document.getElementById('gen').addEventListener('click', generate);
+document.getElementById('name').addEventListener('keydown', function(e){ if (e.key === 'Enter') generate(); });
+document.getElementById('zipBtn').addEventListener('click', function(){
+  if (!current.length) return;
+  saveBlob(makeZip(current), currentName + '_C_programs.zip');
+});
+</script>
+</body>
+</html>
