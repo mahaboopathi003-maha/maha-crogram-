@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maha C Programs | 29–32</title>
+<style>
+:root{--bg:#090d16;--panel:#111927;--cyan:#17c3e8;--green:#1de9a0;--text:#edf7ff;--muted:#a8b8c9}
+*{box-sizing:border-box} body{margin:0;padding:22px 14px;min-height:100vh;background:radial-gradient(circle at top,#13273a 0,#090d16 55%);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+.card{max-width:680px;margin:0 auto;padding:24px;border:1px solid var(--cyan);border-radius:22px;background:rgba(17,25,39,.96);box-shadow:0 0 28px #17c3e81c}
+h1{text-align:center;margin:0;color:var(--green);letter-spacing:2px;font-size:clamp(25px,6vw,36px)} .subtitle{text-align:center;color:var(--muted);margin:9px 0 25px}
+label{display:block;margin:0 0 8px;color:#aeefff;font-weight:700} input{width:100%;padding:14px 15px;border:1px solid var(--cyan);border-radius:12px;background:#080e17;color:#fff;font-size:16px;outline:none}
+input:focus{box-shadow:0 0 0 3px #17c3e833} button{width:100%;margin-top:14px;padding:15px;border:0;border-radius:12px;background:var(--green);color:#07150f;font-weight:800;font-size:16px;letter-spacing:.5px;cursor:pointer}
+.program{padding:14px;margin-top:10px;border:1px solid #2c465b;border-radius:13px;background:#0b121e}.program strong{display:block;color:var(--green);margin-bottom:5px}.program p{margin:0;color:var(--muted);line-height:1.45}
+.section-title{margin:25px 0 12px;color:var(--cyan);font-size:18px} #status{margin-top:16px;line-height:1.5;color:#aeefff}
+#links a{display:block;margin-top:10px;padding:13px;border:1px solid var(--cyan);border-radius:11px;color:var(--green);text-decoration:none;overflow-wrap:anywhere;background:#0b121e}
+.note{margin-top:22px;font-size:13px;line-height:1.6;color:var(--muted);text-align:center}footer{text-align:center;margin-top:20px;color:#6f879d;font-size:12px}
+</style>
+</head>
+<body>
+<main class="card">
+<h1>MAHA C PROGRAMS</h1><p class="subtitle">C Programming Downloads · Programs 29–32</p>
+<label for="name">Enter a name for your files</label>
+<input id="name" type="text" placeholder="Example: Maha" maxlength="40" autocomplete="off">
+<button id="generate" type="button">GENERATE &amp; DOWNLOAD</button>
+<h2 class="section-title">YOUR 4 PROGRAMS</h2>
+<div class="program"><strong>29 — Sum using Function</strong><p>Adds two numbers using the <code>sum()</code> function.</p></div>
+<div class="program"><strong>30 — Swap using Pointers</strong><p>Swaps two numbers using pointers.</p></div>
+<div class="program"><strong>31 — Array Sum using Function</strong><p>Calculates the sum of five array elements.</p></div>
+<div class="program"><strong>32 — Display 2×2 Matrix</strong><p>Reads and displays a 2×2 matrix using a function.</p></div>
+<div id="status" role="status" aria-live="polite"></div><div id="links"></div>
+<p class="note">Enter a name and press GENERATE &amp; DOWNLOAD. If your browser blocks automatic downloads, tap the individual download links shown below.</p>
+<footer>Designed for Maha · Neon Cyan Edition</footer>
+</main>
+<script>
+(function () {
+"use strict";
+var programs = [
+{suffix:"29",code:`#include <stdio.h>
+
+int sum(int a, int b)
+{
+    return a + b;
+}
+
+int main()
+{
+    int a, b;
+    printf("Enter two numbers: ");
+    scanf("%d %d", &a, &b);
+    printf("Sum = %d\\n", sum(a, b));
+    return 0;
+}
+`},
+{suffix:"30",code:`#include <stdio.h>
+
+void swap(int *a, int *b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int main()
+{
+    int a, b;
+    printf("Enter two numbers: ");
+    scanf("%d %d", &a, &b);
+    swap(&a, &b);
+    printf("After swapping: %d %d\\n", a, b);
+    return 0;
+}
+`},
+{suffix:"31",code:`#include <stdio.h>
+
+int sumArray(int a[], int n)
+{
+    int i, total = 0;
+    for (i = 0; i < n; i++)
+        total += a[i];
+    return total;
+}
+
+int main()
+{
+    int a[5], i;
+    printf("Enter 5 elements: ");
+    for (i = 0; i < 5; i++)
+        scanf("%d", &a[i]);
+    printf("Sum = %d\\n", sumArray(a, 5));
+    return 0;
+}
+`},
+{suffix:"32",code:`#include <stdio.h>
+
+void display(int a[2][2])
+{
+    int i, j;
+    for (i = 0; i < 2; i++)
+    {
+        for (j = 0; j < 2; j++)
+            printf("%d ", a[i][j]);
+        printf("\\n");
+    }
+}
+
+int main()
+{
+    int a[2][2], i, j;
+    printf("Enter 4 elements: ");
+    for (i = 0; i < 2; i++)
+        for (j = 0; j < 2; j++)
+            scanf("%d", &a[i][j]);
+    display(a);
+    return 0;
+}
+`}
+];
+var input=document.getElementById("name"), button=document.getElementById("generate"), status=document.getElementById("status"), links=document.getElementById("links");
+button.addEventListener("click",function(){
+ var entered=input.value.trim(), name=entered.replace(/[^a-zA-Z0-9_-]/g,"");
+ links.innerHTML="";
+ if(!name){status.textContent="Please enter a name using letters or numbers first.";input.focus();return;}
+ status.textContent="Your files are ready. Tap each link below to download.";
+ programs.forEach(function(p){
+  var filename=name+p.suffix+".c", blob=new Blob([p.code],{type:"text/plain;charset=utf-8"}), url=URL.createObjectURL(blob), a=document.createElement("a");
+  a.href=url;a.download=filename;a.textContent="DOWNLOAD "+filename;a.setAttribute("aria-label","Download "+filename);links.appendChild(a);
+ });
+});
+})();
+</script>
+</body>
+</html>
