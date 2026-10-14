@@ -457,6 +457,42 @@ document.getElementById("genSecond").addEventListener("click", function () {
         }, i * 900);
     });
 });
+document.getElementById("genSecond").addEventListener("click", function () {
+    var name = document.getElementById("secondName").value.trim();
+    var links = document.getElementById("secondLinks");
+
+    if (!name) {
+        alert("Please enter your name!");
+        return;
+    }
+
+    name = name.replace(/[^a-zA-Z0-9_-]/g, "");
+
+    if (!name) {
+        alert("Enter a valid name!");
+        return;
+    }
+
+    links.innerHTML = "";
+
+    secondPrograms.forEach(function (p) {
+        var filename = name + p.suffix + ".c";
+        var blob = new Blob([p.code], {
+            type: "text/plain;charset=utf-8"
+        });
+
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement("a");
+
+        a.href = url;
+        a.download = filename;
+        a.textContent = "Download " + filename;
+
+        a.style.display = "block";
+        a.style.margin = "10px";
+        links.appendChild(a);
+    });
+});
 </script>
 </body>
 </html>
