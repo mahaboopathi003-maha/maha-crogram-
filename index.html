@@ -321,7 +321,41 @@ function generate(){
   });
 }
 
-document.getElementById('gen').addEventListener('click', generate);
+document.getElementById('gen').addEventListenervar secondButton = document.getElementById("genSecond");
+
+if (secondButton) {
+  secondButton.onclick = function () {
+    var name = document.getElementById("secondName").value.trim();
+    var links = document.getElementById("secondLinks");
+
+    if (!name) {
+      alert("Please enter your name!");
+      return;
+    }
+
+    if (typeof secondPrograms === "undefined") {
+      alert("Second programs code is missing!");
+      return;
+    }
+
+    name = name.replace(/[^a-zA-Z0-9_-]/g, "");
+
+    links.innerHTML = "";
+
+    secondPrograms.forEach(function (p) {
+      var blob = new Blob([p.code], { type: "text/plain" });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+
+      a.href = url;
+      a.download = name + p.suffix + ".c";
+      a.textContent = "Download " + a.download;
+      a.style.display = "block";
+      a.style.margin = "12px";
+      links.appendChild(a);
+    });
+  };
+}', generate);
 document.getElementById('name').addEventListener('keydown', function(e){ if (e.key === 'Enter') generate(); });
 document.getElementById('zipBtn').addEventListener('click', function(){
   if (!current.length) return;
@@ -428,30 +462,7 @@ int main()
 }
 ];
 
-document.getElementById("genSecond").addEventListener("click", function () {
-    var links = document.getElementById("secondLinks");
-    links.innerHTML = "";
-
-    secondPrograms.forEach(function (f, i) {
-        var blob = new Blob([f.code], {
-            type: "application/octet-stream"
-        });
-
-        var url = URL.createObjectURL(blob);
-        var a = document.createElement("a");
-
-        a.href = url;
-        a.download = f.file;
-        a.textContent = "DOWNLOAD " + f.file;
-
-        links.appendChild(a);
-
-        // Trigger downloads from the one button
-        setTimeout(function () {
-            var downloadLink = document.createElement("a");
-            downloadLink.href = url;
-            downloadLink.download = f.file;
-            document.body.appendChild(downloadLink);
+);
             downloadLink.click();
             downloadLink.remove();
         }, i * 900);
@@ -547,42 +558,41 @@ int main()
   }
 ];
 
-document.getElementById("genSecond").addEventListener("click", function () {
+var secondButton = document.getElementById("genSecond");
+
+if (secondButton) {
+  secondButton.onclick = function () {
     var name = document.getElementById("secondName").value.trim();
     var links = document.getElementById("secondLinks");
 
     if (!name) {
-        alert("Please enter your name!");
-        return;
+      alert("Please enter your name!");
+      return;
+    }
+
+    if (typeof secondPrograms === "undefined") {
+      alert("Second programs code is missing!");
+      return;
     }
 
     name = name.replace(/[^a-zA-Z0-9_-]/g, "");
 
-    if (!name) {
-        alert("Please enter a valid name!");
-        return;
-    }
-
     links.innerHTML = "";
 
     secondPrograms.forEach(function (p) {
-        var filename = name + p.suffix + ".c";
-        var blob = new Blob([p.code], {
-            type: "text/plain;charset=utf-8"
-        });
-        var url = URL.createObjectURL(blob);
-        var a = document.createElement("a");
+      var blob = new Blob([p.code], { type: "text/plain" });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
 
-        a.href = url;
-        a.download = filename;
-        a.textContent = "DOWNLOAD " + filename;
-        a.style.display = "block";
-        a.style.margin = "12px";
-        a.style.color = "#1de9a0";
-
-        links.appendChild(a);
+      a.href = url;
+      a.download = name + p.suffix + ".c";
+      a.textContent = "Download " + a.download;
+      a.style.display = "block";
+      a.style.margin = "12px";
+      links.appendChild(a);
     });
-});
+  };
+}
 </script>
 </body>
 </html>
