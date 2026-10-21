@@ -138,6 +138,109 @@ int main()
 }
 `}
 ];
+
+{suffix:"33",code:`#include <stdio.h>
+
+long long factorial(int n) {
+    if (n <= 1) return 1;
+    return n * factorial(n - 1);
+}
+
+int main(void) {
+    int n = 5;
+    printf("Factorial of %d = %lld\\n", n, factorial(n));
+    return 0;
+}`},
+{suffix:"34",code:`#include <stdio.h>
+
+int fibonacci(int n) {
+    if (n <= 1) return n;
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+int main(void) {
+    int n = 6;
+    for (int i = 0; i < n; i++)
+        printf("%d ", fibonacci(i));
+    printf("\\n");
+    return 0;
+}`},
+{suffix:"35",code:`#include <stdio.h>
+
+int sumOfNatural(int n) {
+    if (n == 0) return 0;
+    return n + sumOfNatural(n - 1);
+}
+
+int main(void) {
+    int n = 10;
+    printf("Sum = %d\\n", sumOfNatural(n));
+    return 0;
+}`},
+{suffix:"36",code:`#include <stdio.h>
+
+int add(int a, int b) {
+    return a + b;
+}
+
+int main(void) {
+    int (*funptr)(int, int) = add;
+    printf("Sum = %d\\n", funptr(10, 20));
+    return 0;
+}`},
+{suffix:"37",code:`#include <stdio.h>
+
+int main(void) {
+    int a[5] = {10, 20, 30, 40, 50};
+    int (*ptr)[5] = &a;
+
+    for (int i = 0; i < 5; i++)
+        printf("%d ", (*ptr)[i]);
+
+    printf("\\n");
+    return 0;
+}`},
+{suffix:"38",code:`#include <stdio.h>
+
+int main(void) {
+    char str[] = "Hello C";
+    char *ptr = str;
+    printf("String = %s\\n", ptr);
+    return 0;
+}`},
+{suffix:"39",code:`#include <stdio.h>
+
+int main(void) {
+    int num = 100;
+    int *ptr = &num;
+    int **pptr = &ptr;
+
+    printf("Value of num = %d\\n", **pptr);
+    return 0;
+}`},
+{suffix:"40",code:`#include <stdio.h>
+
+int main(void) {
+    const char *names[] = {"Apple", "Mango", "Orange"};
+
+    for (int i = 0; i < 3; i++)
+        printf("%s\\n", names[i]);
+
+    return 0;
+}`},
+{suffix:"41",code:`#include <stdio.h>
+
+int main(void) {
+    int a[] = {10, 20, 30, 40, 50};
+    int *ptr = a;
+
+    for (int i = 0; i < 5; i++)
+        printf("%d ", *(ptr + i));
+
+    printf("\\n");
+    return 0;
+}`}
+
 var input=document.getElementById("name");
 var button=document.getElementById("generate");
 var status=document.getElementById("status");
